@@ -1,8 +1,8 @@
-============================================================
+===========================================================
 # BRANCH: feature/interface-usuario
 # RESPONSÁVEL: Gabriel Soares
 # DESCRIÇÃO: Arquivo principal da interface do usuário
-# ============================================================
+# ===========================================================
 
 from cadastro_aluno import cadastrar_aluno
 from cadastro_disciplina import cadastrar_disciplina
