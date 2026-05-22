@@ -4,12 +4,12 @@ def cadastrar_aluno():
     print("\n=== CADASTRO DE ALUNO ===")
 
     nome = input("Digite o nome do aluno: ")
-    matricula = input("Digite a matrícula: ")
+    RA = input("Digite seu RA: ")
     turma = input("Digite a turma: ")
 
     aluno = {
         "nome": nome,
-        "matricula": matricula,
+        "RA": RA,
         "turma": turma
     }
 
@@ -28,7 +28,7 @@ def listar_alunos():
 
     for aluno in alunos:
         print(f"Nome: {aluno['nome']}")
-        print(f"Matrícula: {aluno['matricula']}")
+        print(f"Matrícula: {aluno['RA']}")
         print(f"Turma: {aluno['turma']}")
         print("------------------------")
 
