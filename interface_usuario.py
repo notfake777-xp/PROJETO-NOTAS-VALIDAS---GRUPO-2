@@ -1,4 +1,4 @@
-===========================================================
+#===========================================================
 # BRANCH: feature/interface-usuario
 # RESPONSÁVEL: Gabriel Soares
 # DESCRIÇÃO: Arquivo principal da interface do usuário
