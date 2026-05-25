@@ -8,7 +8,7 @@ from cadastro_aluno import cadastrar_aluno, listar_alunos
 from cadastro_disciplina import cadastrar_disciplina, listar_disciplinas
 from inserir_notas import inserir_nota
 from calculo_media import calcular_media
-from situacao_aluno import verificar_situacao
+from situacao_aluno import Situação_aluno_calculadora
 from historico_aluno import exibir_historico
 from interface_usuario import exibir_menu, obter_opcao, limpar_tela, exibir_cabecalho
 from validacoes import validar_opcao_menu
