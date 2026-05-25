@@ -14,6 +14,20 @@ disciplinas = {}
 # Lista para armazenar o histórico acadêmico
 # Cada item é um dicionário representando uma nota de um aluno em uma disciplina num semestre
 historico_academico = []
+# Dicionário para armazenar informações do aluno
+alunos = { 
+# Exemplo: 'aluno_RA': {'nome': 'Nome do Aluno'}
+}
+
+# Dicionário para armazenar informações das disciplinas
+disciplinas = {
+    # Exemplo: 'disc_id': {'nome': 'Nome da Disciplina', 'creditos': 4}
+}
+
+# Lista para armazenar o histórico acadêmico
+# Cada item é um dicionário representando uma nota de um aluno em uma disciplina num semestre
+historico_academico = [alunos, disciplinas]
+
 
 # --- Funções de Gerenciamento --- #
 
@@ -37,15 +51,16 @@ def registrar_nota(RA_aluno: int, id_disciplina: str, semestre: float, nota: flo
     # Registra uma nota para um aluno em uma disciplina e semestre específicos.
     if RA_aluno not in alunos:
         print(f"Erro: Aluno com ID {RA_aluno} não encontrado.")
-        return
+        return input(f"Digite o RA do aluno manualmente: ")
     if id_disciplina not in disciplinas:
         print(f"Erro: Disciplina com ID {id_disciplina} não encontrada.")
-        return
+        return input(f"Digite o ID da disciplina manualmente: ")
     if not (0 <= nota <= 10):
         print("Erro: A nota deve estar entre 0 e 10.")
-        return
+        return input(f'Digite a nota manualmente: ')
 
     # Verifica se já existe um registro para este aluno, disciplina e semestre
+    resgistro_aluno = registro in historico_academico
     for registro in historico_academico:
         if (registro['RA_aluno'] == RA_aluno and
             registro['id_disciplina'] == id_disciplina and
