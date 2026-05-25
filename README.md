@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+# PROJETO-NOTAS-VALIDAS---GRUPO-2
+# REGRAS DO HISTÓRICO
+# O CÓDIGO COMEÇA ESTRUTURANDO OS DADOS EM DICIONÁRIOS
+# EXISTEM TRÊS DICIONÁRIOS PRINCIPAIS: dicionário para armazenar informações dos alunos, dicionário para armazenar informações das disciplinas e um dicionário para armazenar informações 
+=======
 # Sistema de Registro de Notas Académicas
 
 Este é um sistema desenvolvido em **Python** para a gestão e registo de notas de estudantes. O projeto foi estruturado de forma modular, onde cada funcionalidade principal foi desenvolvida em diferentes ramificações (*branches*) pelo grupo de trabalho e, posteriormente, integrada na ramificação principal (`main`).
@@ -36,3 +42,4 @@ git pull origin main
 
 # Unir os módulos das outras branches na main (exemplo)
 git merge nome-da-branch-do-modulo
+>>>>>>> 7770c930b76a5fd9acc46207994716eccab1d8b4
