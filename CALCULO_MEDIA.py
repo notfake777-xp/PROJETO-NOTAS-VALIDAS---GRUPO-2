@@ -1,6 +1,5 @@
 #CALCULO_MEDIA
 
-
 nota_aluno1 = float(input("Digite a nota do seu primeiro Gq:  "))
 nota_aluno2 = float(input("Digite a nota do seu segundo Gq:  "))
 
