@@ -1,33 +1,12 @@
-# Versão 2.0 do meu código do histórico de notas
-import json
+# Versão 2.0 do meu código do histórico de nota
 
 # --- Estruturas de Dados --- #
 
-# Dicionário para armazenar informações dos alunos
-# Exemplo: {12345: {'nome': 'Nome do Aluno'}}
+
 alunos = {}
-
-# Dicionário para armazenar informações das disciplinas
-# Exemplo: {'disc_id': {'nome': 'Nome da Disciplina', 'creditos': 4}}
 disciplinas = {}
-
-# Lista para armazenar o histórico acadêmico
-# Cada item é um dicionário representando uma nota de um aluno em uma disciplina num semestre
 historico_academico = []
-# Dicionário para armazenar informações do aluno
-alunos = { 
-# Exemplo: 'aluno_RA': {'nome': 'Nome do Aluno'}
-}
-
-# Dicionário para armazenar informações das disciplinas
-disciplinas = {
-    # Exemplo: 'disc_id': {'nome': 'Nome da Disciplina', 'creditos': 4}
-}
-
-# Lista para armazenar o histórico acadêmico
-# Cada item é um dicionário representando uma nota de um aluno em uma disciplina num semestre
 historico_academico = [alunos, disciplinas]
-
 
 # --- Funções de Gerenciamento --- #
 
@@ -58,8 +37,7 @@ def registrar_nota(RA_aluno: int, id_disciplina: str, semestre: float, nota: flo
     if not (0 <= nota <= 10):
         print("Erro: A nota deve estar entre 0 e 10.")
         return input(f'Digite a nota manualmente: ')
-
-    # Verifica se já existe um registro para este aluno, disciplina e semestre
+        
     resgistro_aluno = registro in historico_academico
     for registro in historico_academico:
         if (registro['RA_aluno'] == RA_aluno and
@@ -68,8 +46,7 @@ def registrar_nota(RA_aluno: int, id_disciplina: str, semestre: float, nota: flo
             registro['nota'] = nota  # Atualiza a nota se já existir
             print(f"Nota do aluno {alunos[RA_aluno]['nome']} em {disciplinas[id_disciplina]['nome']} no {semestre} atualizada para {nota}.")
             return
-
-    # Adiciona um novo registro de nota
+                
     historico_academico.append({
         'RA_aluno': RA_aluno,
         'id_disciplina': id_disciplina,
@@ -79,7 +56,6 @@ def registrar_nota(RA_aluno: int, id_disciplina: str, semestre: float, nota: flo
     print(f"Nota {nota} registrada para {alunos[RA_aluno]['nome']} em {disciplinas[id_disciplina]['nome']} no {semestre}.")
 
 def verificar_situacao(nota: float, media_aprovacao: float = 7.0) -> str:
-    # Verifica a situação do aluno (Aprovado/Reprovado) com base na nota.
     if nota >= media_aprovacao:
         return "Aprovado"
     else:
@@ -93,7 +69,6 @@ def obter_historico_aluno(RA_aluno: int) -> list:
     return [registro for registro in historico_academico if registro['RA_aluno'] == RA_aluno]
 
 def exibir_historico_aluno(RA_aluno: int, media_aprovacao: float = 7.0):
-    # Exibe o histórico acadêmico detalhado de um aluno.
     if RA_aluno not in alunos:
         print(f"Erro: Aluno com RA {RA_aluno} não encontrado.")
         return
@@ -107,7 +82,6 @@ def exibir_historico_aluno(RA_aluno: int, media_aprovacao: float = 7.0):
         print("Nenhum registro de nota encontrado para este aluno.")
         return
 
-    # Agrupar por semestre para uma melhor visualização
     historico_por_semestre = {}
     for registro in historico:
         semestre = registro['semestre']
