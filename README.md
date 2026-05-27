@@ -1,5 +1,5 @@
 # 📚 Sistema de Registro de Notas
-**Projeto Acadêmico em Grupo | Git & GitHub**
+**Projeto Acadêmico em Grupo - Notas Validas | Git & GitHub**
 
 ---
 
@@ -8,15 +8,15 @@
 | Membro     | Branch              | Arquivo              |
 |------------|---------------------|----------------------|
 | Salatiel   | main                | main.py              |
-| Daniel     | cadastro aluno      | cadastro_aluno.py    |
-| Pedro      | cadastro disciplina | cadastro_disciplina.py |
-| Richard    | inserir notas       | inserir_notas.py     |
-| Anderson   | Calculo media       | calculo_media.py     |
-| Danilo     | situação aluno      | situacao_aluno.py    |
-| Felipe     | Histórico aluno     | historico_aluno.py   |
-| Neto       | interface usuário   | interface_usuario.py |
-| Soares     | validações          | validacoes.py        |
-| Iago       | Develop             | develop.py           |
+| Pedro      | cadastro aluno      | cadastro_aluno.py    |
+| Richard    | cadastro disciplina | cadastro_disciplina.py |
+| Felipe     | inserir notas       | inserir_notas.py     |
+| Neto       | Calculo media       | calculo_media.py     |
+| Daniel     | situação aluno      | situacao_aluno.py    |
+| Anderson   | Histórico aluno     | historico_aluno.py   |
+| Soares     | interface usuário   | interface_usuario.py |
+| Iago       | validações          | validacoes.py        |
+| Danilo     | Develop             | develop.py           |
 
 ---
 
@@ -61,15 +61,15 @@ git push origin "nome-da-sua-branch"
 registro-notas/
 │
 ├── main.py                  # Ponto de entrada (Salatiel)
-├── cadastro_aluno.py        # Cadastro de alunos (Daniel)
-├── cadastro_disciplina.py   # Cadastro de disciplinas (Pedro)
-├── inserir_notas.py         # Inserção de notas (Richard)
-├── calculo_media.py         # Cálculo de médias (Anderson)
-├── situacao_aluno.py        # Situação do aluno (Danilo)
-├── historico_aluno.py       # Histórico acadêmico (Felipe)
-├── interface_usuario.py     # Interface do terminal (Neto)
-├── validacoes.py            # Validações de dados (Soares)
-├── develop.py               # Testes e integração (Iago)
+├── cadastro_aluno.py        # Cadastro de alunos (Pedro)
+├── cadastro_disciplina.py   # Cadastro de disciplinas (Richard)
+├── inserir_notas.py         # Inserção de notas (Felipe)
+├── calculo_media.py         # Cálculo de médias (Neto)
+├── situacao_aluno.py        # Situação do aluno (Daneil)
+├── historico_aluno.py       # Histórico acadêmico (Anderson)
+├── interface_usuario.py     # Interface do terminal (Soares)
+├── validacoes.py            # Validações de dados (Iago)
+├── develop.py               # Testes e integração (Danilo)
 │
 └── dados/                   # Criado automaticamente
     ├── alunos.json
