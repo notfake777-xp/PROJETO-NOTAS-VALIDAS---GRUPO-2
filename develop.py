@@ -91,5 +91,5 @@ def menu_develop():
         print("\n  [!] Opção inválida.")
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     menu_develop()
