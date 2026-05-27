@@ -1,106 +1,104 @@
-# historico_aluno.py
+# ============================================================
+# BRANCH: Histórico aluno
+# RESPONSÁVEL: Anderson
+# DESCRIÇÃO: Módulo para exibição e salvamento do histórico
+# ============================================================
 
-# --- IMPORTS --- #
-from cadastro_aluno import alunos
-from cadastro_disciplina import encontrar_disciplina
-from inserir_notas import historico_academico
+import json
+import os
+from datetime import datetime
+from cadastro_aluno import buscar_aluno
+from calculo_media import obter_media_aluno
+from cadastro_disciplina import buscar_disciplina
 
+ARQUIVO_HISTORICO = "dados/historico.json"
 
-# --- FUNÇÕES --- #
+def _carregar_historico() -> dict:
+    if not os.path.exists(ARQUIVO_HISTORICO):
+        return {}
+    with open(ARQUIVO_HISTORICO, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-def verificar_situacao(nota: float, media_aprovacao: float = 7.0) -> str:
-    if nota >= media_aprovacao:
-        return "Aprovado"
-    else:
-        return "Reprovado"
+def _salvar_historico(historico: dict) -> None:
+    os.makedirs("dados", exist_ok=True)
+    with open(ARQUIVO_HISTORICO, "w", encoding="utf-8") as f:
+        json.dump(historico, f, ensure_ascii=False, indent=4)
 
+def exibir_historico() -> None:
+    """Exibe e salva o histórico acadêmico de um aluno."""
+    print("=" * 50)
+    print("        HISTÓRICO DO ALUNO")
+    print("=" * 50)
 
-def registrar_nota(RA_aluno: int, id_disciplina: str, semestre: str, nota: float):
-    if RA_aluno not in alunos:
-        print(f"Erro: Aluno com RA {RA_aluno} não encontrado.")
+    matricula = input("Digite a matrícula do aluno: ").strip()
+    aluno = buscar_aluno(matricula)
+
+    if aluno is None:
+        print(f"[!] Aluno com matrícula '{matricula}' não encontrado.")
         return
 
-    disc = encontrar_disciplina(id_disciplina)
-    if not disc:
-        print(f"Erro: Disciplina com ID {id_disciplina} não encontrada.")
+    medias = obter_media_aluno(matricula)
+
+    if not medias:
+        print("[!] Nenhuma nota registrada para este aluno.")
         return
 
-    if not (0 <= nota <= 10):
-        print("Erro: A nota deve estar entre 0 e 10.")
-        return
+    data_consulta = datetime.now().strftime("%d/%m/%Y %H:%M")
 
-    # Verifica se já existe registro
-    for registro in historico_academico:
-        if (
-            registro['RA_aluno'] == RA_aluno and
-            registro['id_disciplina'] == id_disciplina and
-            registro['semestre'] == semestre
-        ):
-            registro['nota'] = nota
-            print(f"Nota atualizada para {nota} em {disc['nome']}.")
-            return
+    print(f"\n  Aluno     : {aluno['nome']}")
+    print(f"  Matrícula : {matricula}")
+    print(f"  Curso     : {aluno['curso']}")
+    print(f"  Gerado em : {data_consulta}")
+    print("\n" + "-" * 50)
+    print(f"  {'DISCIPLINA':<22} {'MÉDIA':>6}   STATUS")
+    print("-" * 50)
 
-    # Novo registro
-    historico_academico.append({
-        'RA_aluno': RA_aluno,
-        'id_disciplina': id_disciplina,
-        'semestre': semestre,
-        'nota': nota
+    registro_historico = []
+
+    for codigo, info in medias.items():
+        disciplina = buscar_disciplina(codigo)
+        nome_disc = disciplina["nome"] if disciplina else codigo
+        print(f"  {nome_disc:<22} {info['media']:>6.2f}   {info['status']}")
+
+        registro_historico.append({
+            "codigo": codigo,
+            "disciplina": nome_disc,
+            "media": info["media"],
+            "status": info["status"]
+        })
+
+    print("=" * 50)
+
+    # Salvar histórico automaticamente
+    historico = _carregar_historico()
+    if matricula not in historico:
+        historico[matricula] = []
+
+    historico[matricula].append({
+        "data": data_consulta,
+        "nome": aluno["nome"],
+        "curso": aluno["curso"],
+        "disciplinas": registro_historico
     })
 
-    print(f"Nota {nota} registrada para {alunos[RA_aluno]['nome']} em {disc['nome']}.")
+    _salvar_historico(historico)
+    print(f"\n✅ Histórico salvo automaticamente em '{ARQUIVO_HISTORICO}'.")
 
+def consultar_historico_completo() -> None:
+    """Exibe todo o histórico de consultas de um aluno."""
+    print("=" * 50)
+    print("     HISTÓRICO COMPLETO DE CONSULTAS")
+    print("=" * 50)
 
-def obter_historico_aluno(RA_aluno: int):
-    if RA_aluno not in alunos:
-        print(f"Erro: Aluno com RA {RA_aluno} não encontrado.")
-        return []
+    matricula = input("Digite a matrícula do aluno: ").strip()
+    historico = _carregar_historico()
 
-    return [
-        registro for registro in historico_academico
-        if registro['RA_aluno'] == RA_aluno
-    ]
-
-
-def exibir_historico_aluno():
-    print("\n--- HISTÓRICO DO ALUNO ---")
-
-    try:
-        RA_aluno = int(input("Digite o RA do aluno: "))
-    except ValueError:
-        print("Erro: RA deve ser um número.")
+    if matricula not in historico or not historico[matricula]:
+        print("[!] Nenhum histórico encontrado para esta matrícula.")
         return
 
-    if RA_aluno not in alunos:
-        print("Aluno não encontrado.")
-        return
-
-    aluno_nome = alunos[RA_aluno]['nome']
-    historico = obter_historico_aluno(RA_aluno)
-
-    if not historico:
-        print("Nenhum histórico encontrado.")
-        return
-
-    print(f"\n=== Histórico de {aluno_nome} ({RA_aluno}) ===")
-
-    # Agrupar por semestre
-    historico_por_semestre = {}
-
-    for registro in historico:
-        semestre = registro['semestre']
-        historico_por_semestre.setdefault(semestre, []).append(registro)
-
-    for semestre in sorted(historico_por_semestre):
-        print(f"\nSemestre: {semestre}")
-
-        for registro in historico_por_semestre[semestre]:
-            disc = encontrar_disciplina(registro['id_disciplina'])
-            nome_disc = disc['nome'] if disc else "Desconhecida"
-
-            nota = registro['nota']
-            situacao = verificar_situacao(nota)
-
-            print(f"- {nome_disc} ({registro['id_disciplina']}) | Nota: {nota:.2f} | {situacao}")
-
-    print("\n----------------------------")
+    for i, registro in enumerate(historico[matricula], 1):
+        print(f"\n  [{i}] Consulta em: {registro['data']}")
+        print(f"      Aluno: {registro['nome']} | Curso: {registro['curso']}")
+        for disc in registro["disciplinas"]:
+            print(f"      - {disc['disciplina']:<20} Média: {disc['media']:.2f}  {disc['status']}")
