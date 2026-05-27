@@ -1,120 +1,66 @@
-#===========================================================
-# BRANCH: feature/interface-usuario
+# ============================================================
+# BRANCH: Interface usuário
 # RESPONSÁVEL: Gabriel Soares
-# DESCRIÇÃO: Arquivo principal da interface do usuário
-# ===========================================================
+# DESCRIÇÃO: Módulo responsável pela interface do terminal
+# ============================================================
 
-from cadastro_aluno import cadastrar_aluno
-from cadastro_disciplina import cadastrar_disciplina
-from inserir_notas import inserir_notas
-from calculo_media import calcular_media
-from situacao_aluno import verificar_situacao
-from historico_aluno import mostrar_historico
+import os
+import platform
 
+def limpar_tela() -> None:
+    """Limpa o terminal de acordo com o sistema operacional."""
+    if platform.system() == "Windows":
+        os.system("cls")
+    else:
+        os.system("clear")
 
-def limpar_tela():
-    print("\n" * 40)
+def exibir_cabecalho() -> None:
+    """Exibe o cabeçalho visual do sistema."""
+    print("=" * 50)
+    print("      SISTEMA DE REGISTRO DE NOTAS")
+    print("        Projeto Acadêmico - 2026")
+    print("=" * 50)
 
+def exibir_menu() -> None:
+    """Exibe o menu principal de opções."""
+    print("\n  Selecione uma opção:\n")
+    print("  [1] Cadastrar Aluno")
+    print("  [2] Cadastrar Disciplina")
+    print("  [3] Listar Alunos")
+    print("  [4] Inserir Notas")
+    print("  [5] Calcular Médias")
+    print("  [6] Situação do Aluno")
+    print("  [7] Histórico do Aluno")
+    print("  [8] Sair")
+    print("\n" + "-" * 50)
 
-def pausar():
-    input("\nPressione ENTER para continuar...")
+def obter_opcao() -> str:
+    """Lê e retorna a opção digitada pelo usuário."""
+    return input("  Opção: ").strip()
 
+def exibir_mensagem_sucesso(mensagem: str) -> None:
+    """Exibe uma mensagem de sucesso formatada."""
+    print(f"\n  ✅ {mensagem}")
 
-def menu_principal():
+def exibir_mensagem_erro(mensagem: str) -> None:
+    """Exibe uma mensagem de erro formatada."""
+    print(f"\n  ❌ {mensagem}")
 
-    while True:
-        limpar_tela()
+def exibir_mensagem_aviso(mensagem: str) -> None:
+    """Exibe uma mensagem de aviso formatada."""
+    print(f"\n  ⚠️  {mensagem}")
 
-        print("=" * 50)
-        print("      SISTEMA DE REGISTRO DE NOTAS")
-        print("=" * 50)
-        print("1 - Cadastro de alunos")
-        print("2 - Cadastro de disciplinas")
-        print("3 - Inserir notas")
-        print("4 - Calcular média do aluno")
-        print("5 - Verificar situação do aluno")
-        print("6 - Histórico acadêmico")
-        print("0 - Sair")
-        print("=" * 50)
+def exibir_separador(caractere: str = "-", tamanho: int = 50) -> None:
+    """Exibe uma linha separadora."""
+    print(caractere * tamanho)
 
-        opcao = input("Escolha uma opção: ")
+def exibir_titulo_secao(titulo: str) -> None:
+    """Exibe um título de seção centralizado."""
+    print("=" * 50)
+    print(f"  {titulo.upper()}")
+    print("=" * 50)
 
-        if opcao == "1":
-            limpar_tela()
-            print("=== CADASTRO DE ALUNOS ===\n")
-
-            try:
-                cadastrar_aluno()
-            except Exception as erro:
-                print(f"Erro ao cadastrar aluno: {erro}")
-
-            pausar()
-
-        elif opcao == "2":
-            limpar_tela()
-            print("=== CADASTRO DE DISCIPLINAS ===\n")
-
-            try:
-                cadastrar_disciplina()
-            except Exception as erro:
-                print(f"Erro ao cadastrar disciplina: {erro}")
-
-            pausar()
-
-        elif opcao == "3":
-            limpar_tela()
-            print("=== INSERÇÃO DE NOTAS ===\n")
-
-            try:
-                inserir_notas()
-            except Exception as erro:
-                print(f"Erro ao inserir notas: {erro}")
-
-            pausar()
-
-        elif opcao == "4":
-            limpar_tela()
-            print("=== CÁLCULO DE MÉDIA ===\n")
-
-            try:
-                calcular_media()
-            except Exception as erro:
-                print(f"Erro ao calcular média: {erro}")
-
-            pausar()
-
-        elif opcao == "5":
-            limpar_tela()
-            print("=== SITUAÇÃO DO ALUNO ===\n")
-
-            try:
-                verificar_situacao()
-            except Exception as erro:
-                print(f"Erro ao verificar situação: {erro}")
-
-            pausar()
-
-        elif opcao == "6":
-            limpar_tela()
-            print("=== HISTÓRICO ACADÊMICO ===\n")
-
-            try:
-                mostrar_historico()
-            except Exception as erro:
-                print(f"Erro ao exibir histórico: {erro}")
-
-            pausar()
-
-        elif opcao == "0":
-            limpar_tela()
-            print("Encerrando o sistema...")
-            print("Obrigado por utilizar o Registro de Notas!")
-            break
-
-        else:
-            print("\nOpção inválida!")
-            pausar()
-
-
-if __name__ == "__main__":
-    menu_principal()
+def confirmar_acao(mensagem: str) -> bool:
+    """Solicita confirmação do usuário para uma ação."""
+    resposta = input(f"\n  {mensagem} (s/n): ").strip().lower()
+    return resposta == "s"
